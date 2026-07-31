@@ -12,7 +12,7 @@ use App\Http\Controllers\Admin\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
 
 //admin.login
-Route::middleware('guest')
+Route::middleware('guest:admin')
 ->prefix('admin')
 ->as('admin.')
 ->group(function () {
