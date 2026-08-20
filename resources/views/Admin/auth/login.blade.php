@@ -1,4 +1,4 @@
- <!doctype html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
@@ -56,7 +56,7 @@
                 <label class="form-label">
                   Password
                   <span class="form-label-description">
-                    <a href="./forgot-password.html">I forgot password</a>
+                    <a href="{{ route('admin.password.request') }}">I forgot password</a>
                   </span>
                 </label>
                 <div class="input-group input-group-flat">
