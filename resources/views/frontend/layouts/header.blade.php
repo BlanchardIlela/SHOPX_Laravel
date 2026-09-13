@@ -125,11 +125,11 @@
                                     </div>
                                 </div>
                                 <div class="header-action-icon-2">
-                                    <a href="#">
+                                    <a href="{{ route('login') }}">
                                         <img class="svgInject" alt="ShopX"
                                             src="{{ asset('assets/frontend/imgs/theme/icons/icon-user.svg') }}" />
                                     </a>
-                                    <a href="#"><span class="lable ml-0">Account</span></a>
+                                    <a href="{{ route('login') }}"><span class="lable ml-0">Account</span></a>
                                     <div class="cart-dropdown-wrap cart-dropdown-hm2 account-dropdown">
                                         <ul>
                                             <li>
