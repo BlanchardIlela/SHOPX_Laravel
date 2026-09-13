@@ -16,10 +16,6 @@ Route::middleware('guest:admin')
 ->prefix('admin')
 ->as('admin.')
 ->group(function () {
-    Route::get('register', [RegisteredUserController::class, 'create'])
-        ->name('register');
-
-    Route::post('register', [RegisteredUserController::class, 'store']);
 
     Route::get('login', [AuthenticatedSessionController::class, 'create'])
         ->name('login');
@@ -64,3 +60,7 @@ Route::middleware('auth:admin')
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
         ->name('logout');
 });
+
+Route::get('/admin/dashboard', function () {
+    return view('admin.dashboard.index');
+})->middleware(['auth:admin', 'verified'])->name('admin.dashboard');
