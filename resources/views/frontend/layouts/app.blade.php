@@ -16,9 +16,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
         integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="{{asset('assets/global/upload_preview/upload-preview.css')}}" />
 
     <!-- Template CSS -->
     <link rel="stylesheet" href="{{asset('assets/frontend/css/main.css')}}" />
+
+    @stack('styles')
 </head>
 
 <body>
@@ -163,9 +166,13 @@
     <script src="{{ asset('assets/frontend/js/plugins/custom-parallax.js') }}"></script>
     <script src="{{ asset('assets/frontend/js/plugins/leaflet.js') }}"></script>
     <script src="{{ asset('assets/frontend/js/plugins/TweenMax.min.js') }}"></script>
+    <script src="{{ asset('assets/global/upload_preview/upload-preview.min.js') }}"></script>
+
     <!-- Template  JS -->
     <script src="{{ asset('assets/frontend/js/main.js') }}"></script>
     <script src="{{ asset('assets/frontend/js/shop.js') }}"></script>
+
+    @stack('scripts')
 </body>
 
 </html>
