@@ -8,18 +8,24 @@
             </div>
             <div class="card-body p-0">
                 <p>You can edit your account details here.</p>
-                <form method="post" action="{{ route('profiles.update') }}">
+                <form method="post" action="{{ route('profiles.update') }}" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
                     <div class="row mt-30">
+                        <div id="image-preview">
+                            <label for="image-upload" id="image-label">Choose File</label>
+                            <input type="file" name="avatar" id="image-upload" />
+                        </div>
                         <div class="form-group col-md-12">
                             <label>Name <span class="required">*</span></label>
-                            <input required="" class="form-control" name="name" type="text" value="{{ auth('web')->user()->name }}" />
+                            <input required="" class="form-control" name="name" type="text"
+                                value="{{ auth('web')->user()->name }}" />
                             <x-input-error :messages="$errors->get('name')" class="mt-2" />
                         </div>
                         <div class="form-group col-md-12">
                             <label>Email Address <span class="required">*</span></label>
-                            <input required="" class="form-control" name="email" type="email"  value="{{ auth('web')->user()->email }}" />
+                            <input required="" class="form-control" name="email" type="email"
+                                value="{{ auth('web')->user()->email }}" />
                             <x-input-error :messages="$errors->get('email')" class="mt-2" />
                         </div>
                         <div class="col-md-12">
@@ -66,3 +72,19 @@
         </div>
     </div>
 @endsection
+
+
+@push('scripts')
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $.uploadPreview({
+                input_field: "#image-upload", // Default: .image-upload
+                preview_box: "#image-preview", // Default: .image-preview
+                label_field: "#image-label", // Default: .image-label
+                label_default: "Choose File", // Default: Choose File
+                label_selected: "Change File", // Default: Change File
+                no_label: false // Default: false
+            });
+        });
+    </script>
+@endpush
