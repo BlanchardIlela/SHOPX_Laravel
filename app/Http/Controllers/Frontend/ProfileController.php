@@ -4,12 +4,15 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Servieces\AlertService;
+use App\Traits\FileUploadTrait;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class ProfileController extends Controller
 {
+    use FileUploadTrait;
+
     function index(): View
     {
         return view('frontend.dashboard.account.index');
@@ -20,9 +23,14 @@ class ProfileController extends Controller
         $request->validate([
             'name' => ['required', 'string', 'max:50'],
             'email' => ['required', 'email', 'unique:users,email,' . auth('web')->user()->id],
+            /* La mise à jour de l'image n'est pas obligatoire */
+            'avatar' => ['nullable', 'image', 'max:2048'],
         ]);
 
+        $filePath = $this->uploadFile($request->file('avatar'));
+
         $user = auth('web')->user();
+        $filePath ? $user->avatar = $filePath : null;
         $user->name = $request->name;
         $user->email = $request->email;
         $user->save();
