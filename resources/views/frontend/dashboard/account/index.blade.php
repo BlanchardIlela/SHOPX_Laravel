@@ -12,7 +12,7 @@
                     @csrf
                     @method('PUT')
                     <div class="row mt-30">
-                        <x-input-image id="image-preview" name="avatar" :image="(auth('web')->user()->avatar)" />
+                        <x-input-image id="image-preview" name="avatar" :image="auth('web')->user()->avatar" />
 
                         <div class="form-group col-md-12">
                             <label>Name <span class="required">*</span></label>
