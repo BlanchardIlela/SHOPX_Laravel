@@ -3,15 +3,23 @@
 namespace App\Traits;
 
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 
 trait FileUploadTrait
 {
-    public function uploadFile(UploadedFile $file, $path = 'uploads'): ?string
+    public function uploadFile(UploadedFile $file, ?string $oldpath = null, ?string $path = 'uploads'): ?string
     {
         if (!$file->isValid()) {
             return null;
         }
+
+        $ignorPath = ['defaults/avatar.jpeg'];
+
+        if($oldpath && File::exists(public_path($oldpath)) && !in_array($oldpath, $ignorPath)){
+            File::delete(public_path($oldpath));
+        }
+
         /* Créons maintenant le chemin pour le stockage des images */
         $folderPath = public_path($path);
 
