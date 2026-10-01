@@ -29,8 +29,11 @@ class ProfileController extends Controller
 
 
         $user = auth('web')->user();
-        $filePath = $this->uploadFile($request->file('avatar'), $user->avatar);
-        $filePath ? $user->avatar = $filePath : null;
+        /* permet de vérifier si un fichier valide a été envoyé dans la requête HTTP */
+        if ($request->hasFile('avatar')) {
+            $filePath = $this->uploadFile($request->file('avatar'), $user->avatar);
+            $filePath ? $user->avatar = $filePath : null;
+        }
         $user->name = $request->name;
         $user->email = $request->email;
         $user->save();
@@ -47,12 +50,12 @@ class ProfileController extends Controller
             'password' => ['required', 'string', 'min:8', 'confirmed']
         ]);
 
-         $user = auth('web')->user();
-         $user->password = bcrypt($request->password);
-         $user->save();
+        $user = auth('web')->user();
+        $user->password = bcrypt($request->password);
+        $user->save();
 
-         AlertService::updated();
+        AlertService::updated();
 
-         return redirect()->back();
+        return redirect()->back();
     }
 }
