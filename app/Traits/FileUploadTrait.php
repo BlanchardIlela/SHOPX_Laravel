@@ -32,4 +32,18 @@ trait FileUploadTrait
 
         return $filePath;
     }
+
+    public function uploadPrivateFile(UploadedFile $file, ?string $path = 'uploads'): ?string
+    {
+        if (!$file->isValid()) {
+            return null;
+        }
+
+        /* La définition de l'extension . */
+        $fileName = Str::uuid(). '.' .$file->getClientOriginalExtension();
+
+        $path = $file->storeAs($path, $fileName, 'local');
+
+        return $path;
+    }
 }
