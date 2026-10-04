@@ -14,8 +14,11 @@ class KycController extends Controller
 {
     use FileUploadTrait;
 
-    function index(): View
+    function index(): View | RedirectResponse
     {
+        if (auth('web')->user()->kyc->status == 'approved' || auth('web')->user()->kyc->status == 'pending') {
+            return redirect()->route('vendor.dashboard');
+        }
         return view('frontend.pages.kyc');
     }
 
