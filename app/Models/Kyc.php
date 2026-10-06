@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Kyc extends Model
 {
+    protected $fillable = ['status'];
     function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
