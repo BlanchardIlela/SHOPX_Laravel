@@ -22,6 +22,19 @@ class KycRequestController extends Controller
         return view('Admin.kyc.index', compact('kycRequests'));
     }
 
+    function pending(): View
+    {
+        $kycRequests = Kyc::whereStatus('pending')->paginate(25);
+        return view('Admin.kyc.pending', compact('kycRequests'));
+    }
+
+
+    function rejected(): View
+    {
+        $kycRequests = Kyc::whereStatus('rejected')->paginate(25);
+        return view('Admin.kyc.rejected', compact('kycRequests'));
+    }
+
     function show(Kyc $kyc_request): View
     {
         return view('Admin.kyc.show', compact('kyc_request'));
