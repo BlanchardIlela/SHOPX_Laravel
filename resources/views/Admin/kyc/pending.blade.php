@@ -4,8 +4,18 @@
     <div class="container-xl">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">All Kyc Requests</h3>
+                <h3 class="card-title">Pending Kyc Requests</h3>
                 <div class="card-actions">
+                    <a href="#" class="btn btn-primary btn-3">
+                        <!-- Download SVG icon from http://tabler.io/icons/icon/plus -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" class="icon icon-2">
+                            <path d="M12 5l0 14"></path>
+                            <path d="M5 12l14 0"></path>
+                        </svg>
+                        Back
+                    </a>
                 </div>
             </div>
             <div class="card-body p-0">
@@ -23,7 +33,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($kycRequests as $kycRequest)
+                            @forelse ($kycRequests as $kycRequest)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $kycRequest->full_name }}</td>
@@ -41,7 +51,11 @@
                                         <a href="{{ route('admin.kyc.show', $kycRequest) }}">View</a>
                                     </td>
                                 </tr>
-                            @endforeach
+                            @empty
+                                <tr>
+                                    <td colspan="7" class="text-center">No Pending KYC Requests</td>
+                                </tr>
+                            @endforelse
                         </tbody>
                     </table>
                 </div>
