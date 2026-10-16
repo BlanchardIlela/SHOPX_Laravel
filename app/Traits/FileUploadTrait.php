@@ -14,7 +14,7 @@ trait FileUploadTrait
             return null;
         }
 
-        $ignorPath = ['defaults/avatar.jpeg'];
+        $ignorPath = ['defaults/avatar.jpeg', 'defaults/banner.jng', 'defaults/shop.jng'];
 
         if($oldpath && File::exists(public_path($oldpath)) && !in_array($oldpath, $ignorPath)){
             File::delete(public_path($oldpath));
