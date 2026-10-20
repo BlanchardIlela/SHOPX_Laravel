@@ -3,24 +3,29 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Permission;
 
 class RoleController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): View
     {
-        //
+        return view('Admin.role.index');
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(): View
     {
-        //
+        /* Toutes les autorisations seront groupée
+        en fonction de leur noms */
+        $permissions = Permission::all()->groupBy('group_name');
+        return view('admin.role.create', compact('permissions'));
     }
 
     /**
