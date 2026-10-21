@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Admin;
+use App\Servieces\AlertService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -33,7 +35,28 @@ class UserRoleController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        dd($request->all());
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'email', 'max:255', 'unique:admins,email'],
+            'password' => ['required', 'confirmed', 'min:8'],
+        ]);
+
+        /* Trouver un role ou pas  */
+        $role = Role::findOrFail($request->role);
+
+        /* Création de l'instance Admin */
+        $admin = new Admin();
+        $admin->name = $request->name;
+        $admin->email = $request->email;
+        $admin->password = bcrypt($request->password);
+        $admin->save();
+
+        /* Assigné un role à un User */
+        $admin->assignRole($role);
+
+        AlertService::created();
+
+        return to_route('admin.role-users.index');
     }
 
     /**
