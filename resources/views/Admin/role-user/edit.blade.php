@@ -63,7 +63,7 @@
                 </form>
             </div>
             <div class="card-footer text-end">
-                <button type="submit" class="btn btn-primary mt-3" onclick="$('form').submit()">Create</button>
+                <button type="submit" class="btn btn-primary mt-3" onclick="$('form').submit()">Update</button>
             </div>
         </div>
     </div>
