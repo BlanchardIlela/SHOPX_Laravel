@@ -17,7 +17,8 @@ class UserRoleController extends Controller
      */
     public function index(): View
     {
-        return view('Admin.role-user.index');
+        $admins = Admin::all();
+        return view('Admin.role-user.index', compact('admins'));
     }
 
     /**
@@ -70,17 +71,44 @@ class UserRoleController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Admin $role_user): View
     {
-        //
+        $admin = $role_user;
+        $roles = Role::all();
+        return view('Admin.role-user.edit', compact('admin', 'roles'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Admin $role_user)
     {
-        //
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'email', 'max:255', 'unique:admins,email, ' . $role_user->id],
+        ]);
+
+        /* Trouver un role ou pas  */
+        $role = Role::findOrFail($request->role);
+
+        /* Création de l'instance Admin */
+        $admin = $role_user;
+        $admin->name = $request->name;
+        $admin->email = $request->email;
+        if ($request->filled('password')) {
+            $request->validate([
+                'password' => ['required', 'confirmed', 'min:8']
+            ]);
+            $admin->password = bcrypt($request->password);
+        }
+        $admin->save();
+
+        /* Assigné un role à un User */
+        $admin->assignRole($role);
+
+        AlertService::updated();
+
+        return to_route('admin.role-users.index');
     }
 
     /**
