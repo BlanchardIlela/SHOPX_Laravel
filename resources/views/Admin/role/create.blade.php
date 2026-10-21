@@ -4,9 +4,9 @@
     <div class="container-xl">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">All Roles</h3>
+                <h3 class="card-title">Create Roles</h3>
                 <div class="card-actions">
-                    <a href="{{ route('admin.role.create') }}" class="btn btn-primary">Create Role</a>
+                    <a href="{{ route('admin.role.index') }}" class="btn btn-primary">Back</a>
                 </div>
             </div>
             <div class="card-body">
