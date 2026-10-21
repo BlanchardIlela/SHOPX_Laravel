@@ -15,6 +15,6 @@ class AlertService
 
     public static function deleted(): void
     {
-        notyf()->danger('Deleted Successfully.');
+        notyf()->success('Deleted Successfully.');
     }
 }
