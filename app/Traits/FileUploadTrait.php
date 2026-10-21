@@ -14,7 +14,7 @@ trait FileUploadTrait
             return null;
         }
 
-        $ignorPath = ['defaults/avatar.jpeg'];
+        $ignorPath = ['defaults/avatar.jpeg', 'defaults/banner.jng', 'defaults/shop.jng'];
 
         if($oldpath && File::exists(public_path($oldpath)) && !in_array($oldpath, $ignorPath)){
             File::delete(public_path($oldpath));
@@ -31,5 +31,19 @@ trait FileUploadTrait
         $filePath = $path.'/'.$fileName;
 
         return $filePath;
+    }
+
+    public function uploadPrivateFile(UploadedFile $file, ?string $path = 'uploads'): ?string
+    {
+        if (!$file->isValid()) {
+            return null;
+        }
+
+        /* La définition de l'extension . */
+        $fileName = Str::uuid(). '.' .$file->getClientOriginalExtension();
+
+        $path = $file->storeAs($path, $fileName, 'local');
+
+        return $path;
     }
 }

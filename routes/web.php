@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\Frontend\KycController;
 use App\Http\Controllers\Frontend\UserDashboardController;
 use App\Http\Controllers\Frontend\ProfileController;
+use App\Http\Controllers\Frontend\StoreController;
 use App\Http\Controllers\Frontend\VendorDashboardController;
 use Illuminate\Support\Facades\Route;
 
@@ -16,11 +18,18 @@ Route::get('/dashboard', [UserDashboardController::class, 'index'])->name('dashb
 Route::get('/profile', [ProfileController::class, 'index'])->name('profiles');
 Route::put('/profile', [ProfileController::class, 'profileUpdate'])->name('profiles.update');
 Route::put('/profile/password', [ProfileController::class, 'passwordUpdate'])->name('password.update');
+
+/** KYC Routes */
+Route::get('/kyc-verification', [KycController::class, 'index'])->name('kyc.index');
+Route::post('/kyc-verification', [KycController::class, 'store'])->name('kyc.store');
 });
 
 /** vendor Routes */
-Route::group(['prefix' => 'vendor', 'as' => 'vendor.', 'middleware' => ['auth', 'verified']], function(){
+Route::group(['prefix' => 'vendor', 'as' => 'vendor.', 'middleware' => ['auth', 'verified', 'role:vendor']], function(){
 Route::get('/dashboard', [VendorDashboardController::class, 'index'])->name('dashboard');
+
+/** shop profile Routes */
+Route::resource('store-profile', StoreController::class);
 });
 
 /* Route::middleware('auth')->group(function () {
