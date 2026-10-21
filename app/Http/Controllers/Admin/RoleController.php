@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Servieces\AlertService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
@@ -89,8 +91,25 @@ class RoleController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Role $role)
     {
-        //
+        try {
+            DB::beginTransaction();
+            // remove role user
+            $role->users()->detach();
+            // detach permissions from role
+            $role->permissions()->detach();
+            $role->delete();
+            DB::commit();
+
+            AlertService::deleted();
+            return response()->json(['status' => 'error', 'message' => 'Deleted Successfully' ]);
+
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            Log::error('Role Delete Error: ', $th);
+
+            return response()->json(['status' => 'error', 'message' => $th->getMessage()], 500);
+        }
     }
 }
