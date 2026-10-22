@@ -260,31 +260,31 @@
                               <span class="nav-link-title"> Home </span>
                           </a>
                       </li>
-
-                      <li class="nav-item dropdown">
-                          <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown"
-                              data-bs-auto-close="false" role="button" aria-expanded="false">
-                              <span class="nav-link-icon d-md-none d-lg-inline-block">
-                              </span>
-                              <span class="nav-link-title"> KYC Requests </span>
-                          </a>
-                          <div class="dropdown-menu">
-                              <div class="dropdown-menu-columns">
-                                  <div class="dropdown-menu-column">
-                                      <a class="dropdown-item" href="{{ route('admin.kyc.index') }}">
-                                          All Requests
-                                      </a>
-                                      <a class="dropdown-item" href="{{ route('admin.kyc.pending') }}">
-                                          Pending Requests
-                                      </a>
-                                      <a class="dropdown-item" href="{{ route('admin.kyc.rejected') }}">
-                                          Rejected Requests
-                                      </a>
+                      @if (hasPermission(['KYC Management']))
+                          <li class="nav-item dropdown">
+                              <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown"
+                                  data-bs-auto-close="false" role="button" aria-expanded="false">
+                                  <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                  </span>
+                                  <span class="nav-link-title"> KYC Requests </span>
+                              </a>
+                              <div class="dropdown-menu">
+                                  <div class="dropdown-menu-columns">
+                                      <div class="dropdown-menu-column">
+                                          <a class="dropdown-item" href="{{ route('admin.kyc.index') }}">
+                                              All Requests
+                                          </a>
+                                          <a class="dropdown-item" href="{{ route('admin.kyc.pending') }}">
+                                              Pending Requests
+                                          </a>
+                                          <a class="dropdown-item" href="{{ route('admin.kyc.rejected') }}">
+                                              Rejected Requests
+                                          </a>
+                                      </div>
                                   </div>
                               </div>
-                          </div>
-                      </li>
-
+                          </li>
+                      @endif
                       <li class="nav-item dropdown">
                           <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown"
                               data-bs-auto-close="false" role="button" aria-expanded="false">
@@ -295,7 +295,7 @@
                           <div class="dropdown-menu">
                               <div class="dropdown-menu-columns">
                                   <div class="dropdown-menu-column">
-                                      <a class="dropdown-item" href="{{ route('admin.role-users.index') }}">
+                                      <a class="dropdown-item" href="{{ route('admin.role.index') }}">
                                           Role
                                       </a>
                                   </div>
