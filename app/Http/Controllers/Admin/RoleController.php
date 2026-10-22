@@ -103,7 +103,7 @@ class RoleController extends Controller
             DB::commit();
 
             AlertService::deleted();
-            return response()->json(['status' => 'error', 'message' => 'Deleted Successfully' ]);
+            return response()->json(['status' => 'success', 'message' => 'Deleted Successfully' ]);
 
         } catch (\Throwable $th) {
             DB::rollBack();
