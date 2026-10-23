@@ -48,6 +48,13 @@ class UserRoleController extends Controller
         /* Trouver un role ou pas  */
         $role = Role::findOrFail($request->role);
 
+        /* Verifions si le role est super admin
+        pas possibilité de créer un user */
+        if($role->name == 'Super Admin') {
+            AlertService::error("You can not create Super Admin role.");
+            return to_route('admin.role-users.index');
+        }
+
         /* Création de l'instance Admin */
         $admin = new Admin();
         $admin->name = $request->name;
@@ -86,6 +93,13 @@ class UserRoleController extends Controller
      */
     public function update(Request $request, Admin $role_user)
     {
+         /* Verifions si le role est super admin
+        pas possibilité de faire la mise à jour */
+        if($role_user->hasRole('Super Admin')) {
+            AlertService::error("You can not update Super Admin user.");
+            return to_route('admin.role-users.index');
+        }
+
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255', 'unique:admins,email, ' . $role_user->id],
@@ -93,6 +107,13 @@ class UserRoleController extends Controller
 
         /* Trouver un role ou pas  */
         $role = Role::findOrFail($request->role);
+
+         /* Verifions si le role est super admin
+        pas possibilité de créer un user */
+        if($role->name == 'Super Admin') {
+            AlertService::error("You can not update Super Admin role.");
+            return to_route('admin.role-users.index');
+        }
 
         /* Création de l'instance Admin */
         $admin = $role_user;
@@ -119,6 +140,12 @@ class UserRoleController extends Controller
      */
     public function destroy(Admin $role_user): JsonResponse
     {
+        /* Verifions si le role est super admin
+        pas possibilité de faire la mise à jour */
+        if($role_user->hasRole('Super Admin')) {
+            AlertService::error("You can not update Super Admin user.");
+            return response()->json(['status' => 'error', 'message' => 'You can not delete Super Admin user.']);
+        }
         try {
             // remove roles form
             foreach ($role_user->getRoleNames() as $role) {
