@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Routing\Controllers\Middleware;
 use App\Models\Admin;
 use App\Servieces\AlertService;
 use Illuminate\Contracts\View\View;
@@ -10,11 +11,18 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Support\Facades\Log;
 use Spatie\Permission\Models\Role;
 
-class UserRoleController extends Controller
+class UserRoleController extends Controller implements HasMiddleware
 {
+    static function Middleware(): array
+    {
+        return [
+            new Middleware('permission:Role User Management')
+        ];
+    }
     /**
      * Display a listing of the resource.
      */
@@ -50,7 +58,7 @@ class UserRoleController extends Controller
 
         /* Verifions si le role est super admin
         pas possibilité de créer un user */
-        if($role->name == 'Super Admin') {
+        if ($role->name == 'Super Admin') {
             AlertService::error("You can not create Super Admin role.");
             return to_route('admin.role-users.index');
         }
@@ -93,9 +101,9 @@ class UserRoleController extends Controller
      */
     public function update(Request $request, Admin $role_user)
     {
-         /* Verifions si le role est super admin
+        /* Verifions si le role est super admin
         pas possibilité de faire la mise à jour */
-        if($role_user->hasRole('Super Admin')) {
+        if ($role_user->hasRole('Super Admin')) {
             AlertService::error("You can not update Super Admin user.");
             return to_route('admin.role-users.index');
         }
@@ -108,9 +116,9 @@ class UserRoleController extends Controller
         /* Trouver un role ou pas  */
         $role = Role::findOrFail($request->role);
 
-         /* Verifions si le role est super admin
+        /* Verifions si le role est super admin
         pas possibilité de créer un user */
-        if($role->name == 'Super Admin') {
+        if ($role->name == 'Super Admin') {
             AlertService::error("You can not update Super Admin role.");
             return to_route('admin.role-users.index');
         }
@@ -142,7 +150,7 @@ class UserRoleController extends Controller
     {
         /* Verifions si le role est super admin
         pas possibilité de faire la mise à jour */
-        if($role_user->hasRole('Super Admin')) {
+        if ($role_user->hasRole('Super Admin')) {
             AlertService::error("You can not update Super Admin user.");
             return response()->json(['status' => 'error', 'message' => 'You can not delete Super Admin user.']);
         }
