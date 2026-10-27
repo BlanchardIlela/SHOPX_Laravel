@@ -12,7 +12,7 @@ class SettingServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->singleton(SettingService::class, fn () => new SettingService);
+        $this->app->singleton(SettingService::class, fn () => new SettingService());
     }
 
     /**

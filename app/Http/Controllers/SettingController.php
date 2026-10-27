@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Setting;
 use App\Servieces\AlertService;
+use App\Servieces\SettingService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -29,6 +30,10 @@ class SettingController extends Controller
                 ['value' => $value]
             );
         }
+
+        /* Récuperer le cache et afficher les résultat */
+        $settings = app()->make(SettingService::class);
+        $settings->clearCashedSettings();
 
         AlertService::updated();
 
