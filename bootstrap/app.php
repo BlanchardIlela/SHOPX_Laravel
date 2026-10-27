@@ -1,6 +1,9 @@
 <?php
 
 use App\Http\Middleware\Authenticate;
+use Spatie\Permission\Middleware\RoleOrPermissionMiddleware;
+use Spatie\Permission\Middleware\PermissionMiddleware;
+use Spatie\Permission\Middleware\RoleMiddleware;
 use App\Http\Middleware\checkKycStatus;
 use App\Http\Middleware\RedirectIfAuthenticated;
 use App\Http\Middleware\Role;
@@ -24,7 +27,10 @@ return Application::configure(basePath: dirname(__DIR__))
             'auth' => 	Authenticate::class,
             'guest' => RedirectIfAuthenticated::class,
             'kyc_verified' => checkKycStatus::class,
-            'role' => Role::class
+            'user_role' => Role::class,
+            'role' => RoleMiddleware::class,
+            'permission' => PermissionMiddleware::class,
+            'role_or_permission' => RoleOrPermissionMiddleware::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

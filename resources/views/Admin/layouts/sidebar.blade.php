@@ -285,27 +285,44 @@
                               </div>
                           </li>
                       @endif
-                      <li class="nav-item dropdown">
-                          <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown"
-                              data-bs-auto-close="false" role="button" aria-expanded="false">
-                              <span class="nav-link-icon d-md-none d-lg-inline-block">
-                              </span>
-                              <span class="nav-link-title"> Access Management </span>
-                          </a>
-                          <div class="dropdown-menu">
-                              <div class="dropdown-menu-columns">
-                                  <div class="dropdown-menu-column">
-                                      <a class="dropdown-item" href="{{ route('admin.role.index') }}">
-                                          Role
-                                      </a>
-                                  </div>
-                                  <div class="dropdown-menu-column">
-                                      <a class="dropdown-item" href="{{ route('admin.role-users.index') }}">
-                                          Role User
-                                      </a>
+
+                      @if (hasPermission(['Role Management', 'Role User Management']))
+                          <li class="nav-item dropdown">
+                              <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown"
+                                  data-bs-auto-close="false" role="button" aria-expanded="false">
+                                  <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                  </span>
+                                  <span class="nav-link-title"> Access Management </span>
+                              </a>
+                              <div class="dropdown-menu">
+                                  <div class="dropdown-menu-columns">
+                                      @if (hasPermission(['Role Management']))
+                                          <div class="dropdown-menu-column">
+                                              <a class="dropdown-item" href="{{ route('admin.role.index') }}">
+                                                  Role
+                                              </a>
+                                          </div>
+                                      @endif
+
+                                      @if (hasPermission(['Role User Management']))
+                                          <div class="dropdown-menu-column">
+                                              <a class="dropdown-item" href="{{ route('admin.role-users.index') }}">
+                                                  Role User
+                                              </a>
+                                          </div>
+                                      @endif
                                   </div>
                               </div>
-                          </div>
+                          </li>
+                      @endif
+
+                      <li class="nav-item">
+                          <a class="nav-link" href="{{ route('admin.settings.index') }}">
+                              <span
+                                  class="nav-link-icon d-md-none d-lg-inline-block">
+                                  </span>
+                              <span class="nav-link-title"> Settings </span>
+                          </a>
                       </li>
 
                       {{-- <li class="nav-item dropdown">

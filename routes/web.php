@@ -25,7 +25,7 @@ Route::post('/kyc-verification', [KycController::class, 'store'])->name('kyc.sto
 });
 
 /** vendor Routes */
-Route::group(['prefix' => 'vendor', 'as' => 'vendor.', 'middleware' => ['auth', 'verified', 'role:vendor']], function(){
+Route::group(['prefix' => 'vendor', 'as' => 'vendor.', 'middleware' => ['auth', 'verified', 'user_role:vendor']], function(){
 Route::get('/dashboard', [VendorDashboardController::class, 'index'])->name('dashboard');
 
 /** shop profile Routes */

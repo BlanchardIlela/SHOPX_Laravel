@@ -17,4 +17,9 @@ class AlertService
     {
         notyf()->success('Deleted Successfully.');
     }
+
+    public static function error($message) : void
+    {
+        notyf()->error($message ? $message : 'Something went wrong.');
+    }
 }
